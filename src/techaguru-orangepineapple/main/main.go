@@ -6,6 +6,7 @@ import (
 	"appengine/memcache"
 	"github.com/ant0ine/go-json-rest/rest"
 	"github.com/astaxie/beegae"
+	//"golang.org/x/net/context"
 	"log"
 	"net/http"
 	"sync"
@@ -20,40 +21,15 @@ func init() {
 	http.Handle("/static/css/", http.StripPrefix("/static/css/", http.FileServer(http.Dir("../static/css"))))
 	http.Handle("/static/js/", http.StripPrefix("/static/js/", http.FileServer(http.Dir("../static/js"))))
 	http.Handle("/static/components/js/", http.StripPrefix("/static/components/js/", http.FileServer(http.Dir("../static/components/js"))))
+	http.Handle("/static/fonts/", http.StripPrefix("/static/fonts/", http.FileServer(http.Dir("../static/fonts"))))
 
-	beegae.Router("/", &controllers.MainController{})
+	//beegae.Router("/api/v1/create", &controllers.RestController{}, "post:PostData")
+
+	beegae.Router("/api/v1/create", &controllers.MainController{}, "post:Post")
+	beegae.Router("/", &controllers.MainController{}, "get:Get")
 	beegae.Run()
 
-	// api := rest.NewApi()
-	// api.Use(rest.DefaultDevStack...)
-	// router, err := rest.MakeRouter(
-	// 	rest.Post("/api/v1/", PostDataHandler),
-	// )
-
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// api.SetApp(router)
-	// http.Handle("/", api.MakeHandler())
-	// http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-
 }
-
-// func PostDataHandler(w rest.ResponseWriter, r *rest.Request) {
-// 	vals := values{
-// 		TimeCreated: time.Now(),
-// 	}
-// 	err := r.DecodeJsonPayload(&vals)
-// 	if err != nil {
-// 		rest.Error(w, err.Error(), http.StatusInternalServerError)
-// 		return
-// 	}
-// 	lock.Lock()
-// 	datastore_INSERT(w.(http.ResponseWriter), r.Request, &vals, "tblData")
-// 	lock.Unlock()
-// 	w.WriteJson(&vals)
-// }
 
 func datastore_INSERT(w http.ResponseWriter, r *http.Request, data interface{}, tableName string) {
 	c := appengine.NewContext(r)

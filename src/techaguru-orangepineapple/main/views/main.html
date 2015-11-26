@@ -42,9 +42,16 @@
   <div class="row content">
     <div class="col-sm-2 sidenav"></div>
     <div class="col-sm-8 text-left"> 
-        <table class="table table-hover table-bordered">
+        
+      <div class="panel panel-info">
+        <!-- Default panel contents -->
+        <div class="panel-heading success">List</div>
+        <div class="panel-body"></div> <!-- Panel Body -->
+
+          <table class="table table-hover table-striped table-condensed ">
             <thead>
-                <tr>
+                <tr class="info">
+                    <th>#</th>
                     <th>Name</th>
                     <th>Age</th>
                     <th>Municipality</th>
@@ -57,23 +64,31 @@
                 </tr>
             </thead>
             <tbody>
+              {{range $key, $val := .Profile}}
                 <tr>
-                    <td>{{.Profile.Name}}</td>
-                    <td>{{.Profile.Age}}</td>
-                    <td>{{.Profile.Municipality}}</td>
-                    <td>{{.Profile.Family}}</td>
-                    <td>{{.Profile.FarmLocation}}</td>
-                    <td>{{.Profile.VarietyOfRice}}</td>
-                    <td>{{.Profile.LandPreparation}}</td>
-                    <td>{{.Profile.Seedling}}</td>
-                    <td>{{.Profile.Harvesting}}</td>
+                  <td>{{$key}}</td>
+                  <td>{{$val.Name}}</td>
+                  <td>{{$val.Age}}</td>
+                  <td>{{$val.Municipality}}</td>
+                  <td>{{$val.Family}}</td>
+                  <td>{{$val.FarmLocation}}</td>
+                  <td>{{$val.VarietyOfRice}}</td>
+                  <td>{{$val.LandPreparation}}</td>
+                  <td>{{$val.Seedling}}</td>
+                  <td>{{$val.Harvesting}}</td>
                 </tr>
-            </tbody>
-      </table>
+              {{end}}
+            </tbody> <!-- table body -->
+          </table> <!-- table data -->
+
+
+      </div> <!-- Panel -->
+
+ 
     </div>
-    <div class="col-sm-2 sidenav"></div>
-  </div>
-</div>
+    <div class="col-sm-2 sidenav"></div> <!-- side nav -->
+  </div> <!-- Row Content -->
+</div> <!-- Container Fluid -->
 
 <footer class="container-fluid text-center"></footer>
 
